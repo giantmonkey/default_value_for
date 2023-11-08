@@ -154,7 +154,7 @@ module DefaultValueFor
       self.class._all_default_attribute_values.each do |attribute, container|
         next unless new_record? || self.class._all_default_attribute_values_not_allowing_nil.include?(attribute)
 
-        connection_default_value_defined = new_record? && respond_to?("#{attribute}_changed?") && !__send__("#{attribute}_changed?")
+        connection_default_value_defined = new_record? && respond_to?("saved_change_to_#{attribute}?") && !__send__("saved_change_to_#{attribute}?")
 
         attribute_blank = if attributes.has_key?(attribute)
                             column = self.class.columns.detect { |c| c.name == attribute }
